@@ -13,9 +13,14 @@ import { validateToken } from "../middlewares/validateToken.js";
 
 const urlsRouter = Router();
 
-urlsRouter.post("/urls/shorten", validateToken, validateSchema(urlSchema), createShortUrl);
+urlsRouter.post(
+  "/urls/shorten",
+  validateToken,
+  validateSchema(urlSchema),
+  createShortUrl
+);
 urlsRouter.get("urls/:id", validateSchema(urlByIdSchema), getUrlById);
-urlsRouter.get("/urls/open/:shortUrl", checkUrlExistence, openUrl)
+urlsRouter.get("/urls/open/:shortUrl", checkUrlExistence, openUrl);
 urlsRouter.delete("urls/:id", validateToken, checkUrlExistence, deleteUrl);
 
 export default urlsRouter;
