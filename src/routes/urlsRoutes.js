@@ -7,7 +7,6 @@ import {
 } from "../controllers/urls.controllers.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
 import { urlSchema } from "../schemas/urlSchema.js";
-import { urlByIdSchema } from "../schemas/urlByIdSchema.js";
 import { checkUrlExistence } from "../middlewares/urlsValidations.js";
 import { validateToken } from "../middlewares/validateToken.js";
 
@@ -19,8 +18,8 @@ urlsRouter.post(
   validateSchema(urlSchema),
   createShortUrl
 );
-urlsRouter.get("urls/:id", validateSchema(urlByIdSchema), getUrlById);
+urlsRouter.get("/urls/:id", getUrlById);
 urlsRouter.get("/urls/open/:shortUrl", checkUrlExistence, openUrl);
-urlsRouter.delete("urls/:id", validateToken, checkUrlExistence, deleteUrl);
+urlsRouter.delete("/urls/:id", validateToken, checkUrlExistence, deleteUrl);
 
 export default urlsRouter;

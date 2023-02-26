@@ -31,7 +31,24 @@ export async function createShortUrl(req, res) {
   }
 }
 
-export async function getUrlById(req, res) {}
+export async function getUrlById(req, res) {
+    const {id} = req.params
+
+    try{
+        const query = await db.query(`SELECT * FROM urls WHERE id=$1`,[id])
+        const url = query.rows[0]
+
+        if(!url) return res.sendStatus(404)
+        
+        delete url.createdAt
+        delete url.userId
+
+        return res.status(200).send(url)
+    }catch(err){
+        console.log(err)
+        return res.sendStatus(500)
+    }
+}
 
 export async function openUrl(req, res) {} //res.redirect
 
