@@ -50,6 +50,16 @@ export async function getUrlById(req, res) {
     }
 }
 
-export async function openUrl(req, res) {} //res.redirect
+export async function openUrl(req, res) {
+    const url = req.urlObject
+
+    try{
+        console.log(url)
+        return res.send()
+    }catch(err){
+        console.log(err)
+        return res.sendStatus(500)
+    }
+} //res.redirect
 
 export async function deleteUrl(req, res) {}
