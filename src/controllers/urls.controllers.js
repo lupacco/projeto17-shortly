@@ -32,36 +32,47 @@ export async function createShortUrl(req, res) {
 }
 
 export async function getUrlById(req, res) {
-    const {id} = req.params
+  const { id } = req.params;
+  const url = req.urlObject
 
-    try{
-        const query = await db.query(`SELECT * FROM urls WHERE id=$1`,[id])
-        const url = query.rows[0]
+  try {
+    delete url.createdAt;
+    delete url.userId;
+    delete url.visitCount;
 
-        if(!url) return res.sendStatus(404)
-        
-        delete url.createdAt
-        delete url.userId
-        delete url.visitCount
-
-        return res.status(200).send(url)
-    }catch(err){
-        console.log(err)
-        return res.sendStatus(500)
-    }
+    return res.status(200).send(url);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
 }
 
 export async function openUrl(req, res) {
-    const urlObject = req.urlObject
-    let visitCount = urlObject.visitCount
+  const urlObject = req.urlObject;
+  let visitCount = urlObject.visitCount;
 
-    try{
-        await db.query(`UPDATE urls SET "visitCount"=$1 WHERE "id"=$2`,[visitCount+1, urlObject.id])
-        return res.redirect(302, urlObject.url)
-    }catch(err){
-        console.log(err)
-        return res.sendStatus(500)
-    }
+  try {
+    await db.query(`UPDATE urls SET "visitCount"=$1 WHERE "id"=$2`, [
+      visitCount + 1,
+      urlObject.id,
+    ]);
+
+    return res.redirect(302, urlObject.url);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
 }
 
-export async function deleteUrl(req, res) {}
+export async function deleteUrl(req, res) {
+  const url = req.urlObject
+
+  try {
+    await db.query(`DELETE FROM urls WHERE "id"=$1`, [url.id])
+
+    return res.sendStatus(204);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+}
