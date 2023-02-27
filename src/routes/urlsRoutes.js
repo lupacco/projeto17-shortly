@@ -24,6 +24,12 @@ urlsRouter.post(
 );
 urlsRouter.get("/urls/:id", checkUrlExistenceById, getUrlById);
 urlsRouter.get("/urls/open/:shortUrl", checkShortUrlExistence, openUrl);
-urlsRouter.delete("/urls/:id", validateToken, checkUrlExistenceById, checkIfUrlMatchUser, deleteUrl);
+urlsRouter.delete(
+  "/urls/:id",
+  validateToken,
+  checkUrlExistenceById,
+  checkIfUrlMatchUser,
+  deleteUrl
+);
 
 export default urlsRouter;

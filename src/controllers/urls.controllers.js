@@ -33,7 +33,7 @@ export async function createShortUrl(req, res) {
 
 export async function getUrlById(req, res) {
   const { id } = req.params;
-  const url = req.urlObject
+  const url = req.urlObject;
 
   try {
     delete url.createdAt;
@@ -65,10 +65,10 @@ export async function openUrl(req, res) {
 }
 
 export async function deleteUrl(req, res) {
-  const url = req.urlObject
+  const url = req.urlObject;
 
   try {
-    await db.query(`DELETE FROM urls WHERE "id"=$1`, [url.id])
+    await db.query(`DELETE FROM urls WHERE "id"=$1`, [url.id]);
 
     return res.sendStatus(204);
   } catch (err) {
