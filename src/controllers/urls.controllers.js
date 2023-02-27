@@ -42,6 +42,7 @@ export async function getUrlById(req, res) {
         
         delete url.createdAt
         delete url.userId
+        delete url.visitCount
 
         return res.status(200).send(url)
     }catch(err){
@@ -51,15 +52,16 @@ export async function getUrlById(req, res) {
 }
 
 export async function openUrl(req, res) {
-    const url = req.urlObject
+    const urlObject = req.urlObject
+    let visitCount = urlObject.visitCount
 
     try{
-        console.log(url)
-        return res.send()
+        await db.query(`UPDATE urls SET "visitCount"=$1 WHERE "id"=$2`,[visitCount+1, urlObject.id])
+        return res.redirect(urlObject.url)
     }catch(err){
         console.log(err)
         return res.sendStatus(500)
     }
-} //res.redirect
+}
 
 export async function deleteUrl(req, res) {}
