@@ -3,14 +3,14 @@ import { db } from "../config/database.connection.js";
 export async function getRanking(req, res) {
   try {
     const query = await db.query(`
-        SELECT users.id AS user_id, 
-        users.name AS user_name, 
-        COUNT(urls.id) AS links_count, 
-        COALESCE(SUM(urls."visitCount"), 0) AS visit_count
+        SELECT users.id AS "userId", 
+        users.name AS "name", 
+        COUNT(urls.id) AS "linksCount", 
+        COALESCE(SUM(urls."visitCount"), 0) AS "visitCount"
         FROM users
         LEFT JOIN urls ON users.id = urls."userId"
         GROUP BY users.id
-        ORDER BY visit_count DESC
+        ORDER BY "visitCount" DESC
         LIMIT 10
         `);
 
