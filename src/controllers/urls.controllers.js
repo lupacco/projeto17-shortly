@@ -57,7 +57,7 @@ export async function openUrl(req, res) {
       urlObject.id,
     ]);
 
-    return res.redirect(302, urlObject.url);
+    return res.status(302).redirect(urlObject.url);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);

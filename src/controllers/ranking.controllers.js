@@ -15,7 +15,7 @@ export async function getRanking(req, res) {
         `);
 
     const ranking = query.rows
-
+    console.log(ranking)
     return res.status(200).send(ranking)
   } catch (err) {
     console.log(err);

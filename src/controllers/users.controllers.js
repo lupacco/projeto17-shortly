@@ -29,6 +29,11 @@ export async function getUserByToken(req, res) {
             `,
       [userId]
     );
+
+    let userInfo = response.rows[0]
+    userInfo.visitCount = Number(userInfo.visitCount)
+
+    console.log(response.rows[0])
     return res.status(200).send(response.rows[0]);
   } catch (err) {
     console.log(err);
